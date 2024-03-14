@@ -26,8 +26,8 @@ menu['*'] = ['Condition: awake',           '["application/runtime", {"condition"
 menu['#'] = ['Condition: asleep',          '["application/runtime", {"condition": "asleep"}]']
 menu['r'] = ['Prepare shutdown: reboot',   '["application/runtime", {"shutdown": {"target": "reboot"}}]']
 menu['p'] = ['Prepare shutdown: poweroff', '["application/runtime", {"shutdown": {"target": "poweroff"}}]']
-menu['?'] = ['Runtime: query status', '["application/runtime", {"status": ""}]']
-menu['!'] = ['Runtime: send config EOF', '["", ""]']
+menu['?'] = ['Application: query status',  '["application/runtime", {"status": ""}]']
+menu['!'] = ['Application: send configuration EOF', '["", ""]']
 
 
 def handler(self, line: str):

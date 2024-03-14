@@ -32,6 +32,7 @@ class webserial:
 			except:
 				time.sleep(0.1)
 		print("...ready")
+		self.send('["application/runtime", {"status":"?"}]')
 
 
 	def receive(self):

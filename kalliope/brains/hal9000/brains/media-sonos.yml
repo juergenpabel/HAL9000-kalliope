@@ -1,0 +1,47 @@
+---
+  - name: "sonos-mute-on"
+    signals:
+      - order: "mute the volume in the {{ name }}"
+      - order: "change the volume to mute in the {{ name }}"
+    neurons:
+      - sonos:
+          action: "mute"
+          room: "{{ sonos_rooms[name] }}"
+
+  - name: "sonos-mute-off"
+    signals:
+      - order: "unmute the volume in the {{ name }}"
+      - order: "change the volume to unmuted in the {{ name }}"
+    neurons:
+      - sonos:
+          action: "unmute"
+          room: "{{ sonos_rooms[name] }}"
+
+  - name: "sonos-play"
+    signals:
+      - order: "play {{ item }} in the {{ name }}"
+      - order: "play {{ item }}"
+    neurons:
+      - sonos:
+          action: "play"
+          room: "{{ sonos_rooms[name] }}"
+          item: "{{ sonos_favorites[item] }}"
+
+  - name: "sonos-pause"
+    signals:
+      - order: "pause the media in the {{ name }}"
+      - order: "pause the media"
+    neurons:
+      - sonos:
+          action: "pause"
+          room: "{{ sonos_rooms[name] }}"
+
+  - name: "sonos-unpause"
+    signals:
+      - order: "unpause the media in the {{ name }}"
+      - order: "unpause the media"
+    neurons:
+      - sonos:
+          action: "unpause"
+          room: "{{ sonos_rooms[name] }}"
+

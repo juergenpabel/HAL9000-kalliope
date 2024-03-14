@@ -1,0 +1,8 @@
+---
+  - name: "generic-hello"
+    signals:
+      - order: "hello"
+    neurons:
+      - say:
+          message: "hello dave"
+

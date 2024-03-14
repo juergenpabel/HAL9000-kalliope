@@ -1,0 +1,11 @@
+---
+
+  - name: "hal9000-ready"
+    signals:
+      - mqtt_subscriber:
+          broker_ip: "127.0.0.1"
+          topic: "hal9000/event/brain/ready"
+    neurons:
+      - play:
+          filename: "resources/data/audio/hal9000/i-am-completely-operational-and-my-circuits-are-functioning-perfectly.wav"
+

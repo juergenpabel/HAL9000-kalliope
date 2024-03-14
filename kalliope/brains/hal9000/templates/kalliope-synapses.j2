@@ -1,0 +1,8 @@
+{% if nb_orders > 0 %}
+    There are {{ nb_orders }} orders available:
+    {% for order in orders %}
+        {{ order }}
+    {% endfor %}
+{% else %}
+    no orders loaded.
+{% endif %}

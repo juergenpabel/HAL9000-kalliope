@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import os
 import logging
 import time
 import serial
@@ -23,8 +24,12 @@ class Driver(HAL9000_Driver):
 
 	def configure(self, configuration: ConfigParser) -> None:
 		HAL9000_Driver.configure(self, configuration)
-		self.config['trace'] = configuration.getboolean('driver:webserial', 'trace', fallback=False)
-		self.config['tty']  = configuration.getstring(str(self), 'driver-tty', fallback='/dev/ttyHAL9000')
+		self.config['trace'] = os.getenv("HAL9000_DRIVER_WEBSERIAL_TRACE")
+		if self.config['trace'] is None:
+			self.config['trace'] = configuration.getboolean('driver:webserial', 'trace', fallback=False)
+		self.config['tty'] = os.getenv("HAL9000_DRIVER_TTY")
+		if self.config['tty'] is None:
+			self.config['tty'] = configuration.getstring(str(self), 'driver-tty', fallback='/dev/ttyHAL9000')
 #todo: pin-sda,pin-scl from config
 		if Driver.serial is None:
 			self.logger.info(f"driver:webserial => Connecting to '{self.config['tty']}'...")
@@ -32,15 +37,17 @@ class Driver(HAL9000_Driver):
 			try:
 				Driver.serial = serial.Serial(port=self.config['tty'], timeout=0.01, baudrate=115200, bytesize=serial.EIGHTBITS, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE)
 				self.logger.debug('driver:webserial => ...ready')
-				data = {}
+				time.sleep(1)
 				self.send('["application/runtime", {"status":"?"}]', True)
+				data = {}
 				while "status" not in data or data["status"] == "booting":
 					line = self.receive()
-					if line is not None and line.startswith('["application/runtime"'):
+					if line is not None:
 						data = json.loads(line)
 						if len(data) == 2:
 							data = data[1]
 						else:
+							self.logger.debug(f"Waiting for application/status, ignoring: {data}")
 							data = {}
 				if data["status"] == "configuring":
 					i2c_bus  = configuration.getint('mcp23X17', 'i2c-bus', fallback=0)

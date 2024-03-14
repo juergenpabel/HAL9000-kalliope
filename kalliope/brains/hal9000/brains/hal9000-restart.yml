@@ -1,0 +1,12 @@
+---
+
+  - name: "hal9000-restart"
+    signals:
+      - order: "Restart yourself"
+      - order: "Reboot"
+    neurons:
+      - mqtt_publisher:
+          broker_ip: "127.0.0.1"
+          topic: "hal9000/daemon/brain/command"
+          payload: "restart"
+

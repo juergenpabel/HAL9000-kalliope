@@ -1,0 +1,72 @@
+---
+
+  - includes:
+        - brains/datetime-info.yml
+        - brains/datetime-timer.yml
+        - brains/hal9000-ready.yml
+        - brains/hal9000-restart.yml
+        - brains/hal9000-shutdown.yml
+        - brains/kalliope-help.yml
+        - brains/media-sonos.yml
+
+
+  - name: "hook-on-start"
+    signals: []
+    neurons:
+      - mqtt_publisher:
+          broker_ip: "127.0.0.1"
+          topic: "hal9000/event/kalliope/brain/state"
+          payload: "started"
+
+
+  - name: "hook-on-waiting-for-trigger"
+    signals: []
+    neurons:
+      - mqtt_publisher:
+          broker_ip: "127.0.0.1"
+          topic: "hal9000/event/kalliope/brain/state"
+          payload: "waiting"
+
+
+  - name: "hook-on-start-listening"
+    signals: []
+    neurons:
+      - mqtt_publisher:
+          broker_ip: "127.0.0.1"
+          topic: "hal9000/event/kalliope/brain/state"
+          payload: "listening"
+      - play:
+          filename: "resources/data/audio/dong.wav"
+
+
+  - name: "hook-on-stop-listening"
+    signals: []
+    neurons:
+      - mqtt_publisher:
+          broker_ip: "127.0.0.1"
+          topic: "hal9000/event/kalliope/brain/state"
+          payload: "thinking"
+
+
+  - name: "hook-on-start-speaking"
+    signals: []
+    neurons:
+      - mqtt_publisher:
+          broker_ip: "127.0.0.1"
+          topic: "hal9000/event/kalliope/brain/state"
+          payload: "speaking"
+
+
+  - name: "hook-on-stt-error"
+    signals: []
+    neurons:
+      - play:
+          filename: "resources/data/audio/hal9000/i-am-sorry-dave-i-dont-have-enough-information.wav"
+
+
+  - name: "hook-on-order-not-found"
+    signals: []
+    neurons:
+      - play:
+          filename: "resources/data/audio/hal9000/i-am-sorry-dave-i-am-afraid-i-cant-do-that.wav"
+

@@ -1,0 +1,9 @@
+---
+  - name: "kalliope-help"
+    signals:
+      - order: "help"
+    neurons:
+      - list_available_orders:
+          ignore_machine_name: 1
+#          order_per_synapse_limit: 1
+          file_template: "templates/kalliope-synapses.j2"

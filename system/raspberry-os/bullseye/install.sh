@@ -7,6 +7,7 @@ cp conf/modprobe.d/* /etc/modprobe.d/
 apt update
 apt upgrade -y
 apt install -y python3 python3-pip mosquitto uwsgi uwsgi-plugin-python3 python3-uwsgidecorators python3-paho-mqtt python3-willow python3-numpy libportaudio2
+apt install -y libasound2-dev portaudio19-dev ## kalliope requirements.txt
 
 systemctl stop uwsgi
 systemctl enable uwsgi
